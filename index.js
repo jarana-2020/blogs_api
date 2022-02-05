@@ -25,4 +25,5 @@ app.post('/user', checkFieldExists, validateFields, UserController.createUser);
 app.post('/categories', checkToken, validateName, CategorieController.createCategorie);
 app.post('/login', checkLogin, LoginController.executeLogin);
 app.get('/user', checkToken, UserController.getAllUsers);
+app.get('/categories', checkToken, CategorieController.getAllCategories);
 app.get('/user/:id', checkToken, UserController.userById);
