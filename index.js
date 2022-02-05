@@ -29,4 +29,5 @@ app.post('/login', checkLogin, LoginController.executeLogin);
 app.post('/post', checkToken, checkPost, PostController.createPost);
 app.get('/user', checkToken, UserController.getAllUsers);
 app.get('/categories', checkToken, CategorieController.getAllCategories);
-app.get('/user/:id', checkToken, UserController.userById);
+app.get('/post', checkToken, PostController.getAllPosts);
+app.get('/user/:id', checkToken, PostController.getAllPosts);
