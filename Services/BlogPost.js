@@ -1,4 +1,4 @@
-const { BlogPost, PostsCategorie, Categorie } = require('../models');
+const { BlogPost, PostsCategorie, Categorie, User } = require('../models');
 
 const categorieExists = (array) => {
    const result = array.reduce(async (ac, cur) => {
@@ -44,6 +44,17 @@ const createPost = async (objPost, userId) => {
   };
 };
 
+const getAllPosts = async () => {
+  const posts = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user' },
+      { model: Categorie, as: 'categories' },
+    ], 
+  });
+  return posts;
+};
+
 module.exports = {
   createPost,
+  getAllPosts,
 };
