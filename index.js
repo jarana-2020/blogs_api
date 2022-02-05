@@ -8,6 +8,7 @@ const {
 } = require('./Middlewares/validateUser');
 
 const { checkLogin } = require('./Middlewares/validateLogin');
+const { checkToken } = require('./Middlewares/validateToken');
 
 const app = express();
 app.use(express.json());
@@ -20,3 +21,4 @@ app.get('/', (request, response) => {
 });
 app.post('/user', checkFieldExists, validateFields, UserController.createUser);
 app.post('/login', checkLogin, LoginController.executeLogin);
+app.get('/user', checkToken, UserController.getAllUsers);
