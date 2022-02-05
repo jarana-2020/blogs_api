@@ -8,7 +8,6 @@ const createUser = async (req, res) => {
   try {
     const { displayName, email } = req.body;
     const user = await ServiceUser.createUser(req.body);
-    console.log('controller', user);
     if (user.message) return res.status(user.code).json(user.message);
     const token = jwt.sign({ userName: displayName, email }, key);
     return res.status(201).json({ token });

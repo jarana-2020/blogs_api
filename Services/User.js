@@ -24,4 +24,5 @@ const createUser = async (userObj) => {
 
 module.exports = {
   createUser,
+  getEmail,
 };

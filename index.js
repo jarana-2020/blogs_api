@@ -1,10 +1,13 @@
 const express = require('express');
 const UserController = require('./Controllers/User');
+const LoginController = require('./Controllers/Login');
 
 const {
   checkFieldExists,
   validateFields,
 } = require('./Middlewares/validateUser');
+
+const { checkLogin } = require('./Middlewares/validateLogin');
 
 const app = express();
 app.use(express.json());
@@ -16,3 +19,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 app.post('/user', checkFieldExists, validateFields, UserController.createUser);
+app.post('/login', checkLogin, LoginController.executeLogin);
