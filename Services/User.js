@@ -22,7 +22,13 @@ const createUser = async (userObj) => {
   return user;
 };
 
+const getAllUsers = async () => {
+  const users = await User.findAll();
+  return users;
+};
+
 module.exports = {
   createUser,
   getEmail,
+  getAllUsers,
 };
