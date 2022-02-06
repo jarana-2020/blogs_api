@@ -31,3 +31,4 @@ app.get('/user', checkToken, UserController.getAllUsers);
 app.get('/categories', checkToken, CategorieController.getAllCategories);
 app.get('/post', checkToken, PostController.getAllPosts);
 app.get('/user/:id', checkToken, UserController.userById);
+app.get('/post/:id', checkToken, PostController.getPostById);
