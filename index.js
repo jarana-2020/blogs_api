@@ -33,3 +33,4 @@ app.get('/post', checkToken, PostController.getAllPosts);
 app.put('/post/:id', checkToken, checkEditPost, PostController.editPost);
 app.get('/user/:id', checkToken, UserController.userById);
 app.get('/post/:id', checkToken, PostController.getPostById);
+app.delete('/post/:id', checkToken, PostController.deletePost);
