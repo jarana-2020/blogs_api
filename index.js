@@ -30,6 +30,7 @@ app.post('/post', checkToken, checkPost, PostController.createPost);
 app.get('/user', checkToken, UserController.getAllUsers);
 app.get('/categories', checkToken, CategorieController.getAllCategories);
 app.get('/post', checkToken, PostController.getAllPosts);
+app.delete('/user/me', checkToken, UserController.deleteUser);
 app.put('/post/:id', checkToken, checkEditPost, PostController.editPost);
 app.get('/user/:id', checkToken, UserController.userById);
 app.get('/post/:id', checkToken, PostController.getPostById);
