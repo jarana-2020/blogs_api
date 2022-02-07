@@ -49,10 +49,24 @@ const editPost = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { id: userId } = req.user;
+    const postDeleted = await ServiceBlogPost.deletePost(id, userId);
+    if (postDeleted.message) {
+      return res.status(postDeleted.code).json(postDeleted.message); 
+    }
+    return res.status(204).end();
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   editPost,
+  deletePost,
 };

@@ -97,9 +97,23 @@ const editPost = async (id, userId, objPost) => {
   };
 };
 
+const deletePost = async (id, userId) => {
+  const getPost = await getPostById(id);
+  if (getPost.message) return getPost;
+  
+  const checkUser = await verifyUser(id, userId);
+  if (checkUser.message) return checkUser;
+
+  const deletedPost = await BlogPost.destroy({
+    where: { id },
+  });
+  return deletedPost;
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   editPost,
+  deletePost,
 };
