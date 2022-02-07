@@ -35,8 +35,24 @@ const getPostById = async (req, res) => {
   }
 };
 
+const editPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { body } = req;
+    const { id: userId } = req.user;
+    const postEdited = await ServiceBlogPost.editPost(id, userId, body);
+    if (postEdited.message) {
+      return res.status(postEdited.code).json(postEdited.message); 
+    }
+    return res.status(200).json(postEdited);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  editPost,
 };
