@@ -26,7 +26,7 @@ app.get('/', (request, response) => {
 app.post('/user', checkFieldExists, validateFields, UserController.createUser);
 app.post('/categories', checkToken, validateName, CategorieController.createCategorie);
 app.post('/login', checkLogin, LoginController.executeLogin);
-app.post('/post/search', checkToken, PostController.searchPost);
+app.get('/post/search', checkToken, PostController.searchPost);
 app.post('/post', checkToken, checkPost, PostController.createPost);
 app.get('/user', checkToken, UserController.getAllUsers);
 app.get('/categories', checkToken, CategorieController.getAllCategories);

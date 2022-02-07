@@ -124,8 +124,8 @@ const searchPost = async (value) => {
       ],
     },
     include: [
-      { model: User, as: 'user' },
-      { model: Categorie, as: 'categories' },
+      { model: User, as: 'user', attributes: { exclude: 'password' } },
+      { model: Categorie, as: 'categories', through: { attributes: [] } },
     ],
   });
   return getPostSearched;
