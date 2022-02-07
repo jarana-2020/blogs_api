@@ -12,7 +12,7 @@ const {
 const { checkLogin } = require('./Middlewares/validateLogin');
 const { checkToken } = require('./Middlewares/validateToken');
 const { validateName } = require('./Middlewares/validateCategorie');
-const { checkPost } = require('./Middlewares/validatePost');
+const { checkPost, checkEditPost } = require('./Middlewares/validatePost');
 
 const app = express();
 app.use(express.json());
@@ -30,5 +30,6 @@ app.post('/post', checkToken, checkPost, PostController.createPost);
 app.get('/user', checkToken, UserController.getAllUsers);
 app.get('/categories', checkToken, CategorieController.getAllCategories);
 app.get('/post', checkToken, PostController.getAllPosts);
+app.put('/post/:id', checkToken, checkEditPost, PostController.editPost);
 app.get('/user/:id', checkToken, UserController.userById);
 app.get('/post/:id', checkToken, PostController.getPostById);
