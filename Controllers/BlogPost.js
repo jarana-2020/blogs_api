@@ -63,10 +63,21 @@ const deletePost = async (req, res) => {
   }
 };
 
+const searchPost = async (req, res) => {
+  try {
+    const { q } = req.query;
+    const posts = await ServiceBlogPost.searchPost(q);
+    return res.status(200).json(posts);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   editPost,
   deletePost,
+  searchPost,
 };
