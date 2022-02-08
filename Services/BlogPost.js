@@ -5,8 +5,9 @@ const categorieExists = (array) => {
    const result = array.reduce(async (ac, cur) => {
      const categorie = await Categorie.findByPk(cur);
      if (!categorie) {
-      return { code: 400, 
-        message: { message: '"categoryIds" not found' } };
+      return { error: 
+        { code: 'badRequest',
+         message: '"categoryIds" not found' } };
      }
      return ac;
    }, false);
@@ -34,7 +35,7 @@ const insertPostCategorie = (arrayCategories, postId) => {
 const createPost = async (objPost, userId) => {
   const { title, content, categoryIds } = objPost;
   const verifyCategory = await categorieExists(categoryIds);
-  if (verifyCategory.message) return verifyCategory;
+  if (verifyCategory.error) return verifyCategory;
   const post = await insertPost(title, content, userId);
   insertPostCategorie(categoryIds, post.id);
   return {
@@ -63,8 +64,9 @@ const getPostById = async (id) => {
     ],
   });
   if (!post) {
-    return { code: 404, 
-      message: { message: 'Post does not exist' } };
+    return { error: 
+      { code: 'badRequest',
+       message: 'Post does not exist' } };
   }
   return post;
 };
@@ -72,8 +74,9 @@ const getPostById = async (id) => {
 const verifyUser = async (id, userId) => {
   const post = await BlogPost.findByPk(id);
   if (post.userId !== userId) {
-    return { code: 401, 
-      message: { message: 'Unauthorized user' } };
+    return { error: 
+      { code: 'unauthorized',
+       message: 'Unauthorized user' } };
   }
   return post;
 };
@@ -81,7 +84,7 @@ const verifyUser = async (id, userId) => {
 const editPost = async (id, userId, objPost) => {
   const { title, content } = objPost;
   const checkUser = await verifyUser(id, userId);
-  if (checkUser.message) return checkUser;
+  if (checkUser.error) return checkUser;
   
   await BlogPost.update({ title, content },
     { where: { id } });
@@ -111,12 +114,8 @@ const deletePost = async (id, userId) => {
   return deletedPost;
 };
 
-const searchPost = async (value) => {
-  if (!value) {
-    const allPosts = await getAllPosts();
-    return allPosts;
-  }
-  const getPostSearched = await BlogPost.findAll({
+const getAllPostsByQuery = async (value) => {
+  const posts = await BlogPost.findAll({
     where: {
       [Op.or]: [
         { title: { [Op.like]: `%${value}%` } },
@@ -127,7 +126,16 @@ const searchPost = async (value) => {
       { model: User, as: 'user', attributes: { exclude: 'password' } },
       { model: Categorie, as: 'categories', through: { attributes: [] } },
     ],
-  });
+  }); 
+  return posts;
+};
+
+const searchPost = async (value) => {
+  if (!value) {
+    const allPosts = await getAllPosts();
+    return allPosts;
+  }
+  const getPostSearched = await getAllPostsByQuery(value);
   return getPostSearched;
 };
 
