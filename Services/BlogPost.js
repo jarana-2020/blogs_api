@@ -65,7 +65,7 @@ const getPostById = async (id) => {
   });
   if (!post) {
     return { error: 
-      { code: 'badRequest',
+      { code: 'notFound',
        message: 'Post does not exist' } };
   }
   return post;
@@ -103,10 +103,10 @@ const editPost = async (id, userId, objPost) => {
 
 const deletePost = async (id, userId) => {
   const getPost = await getPostById(id);
-  if (getPost.message) return getPost;
+  if (getPost.error) return getPost;
   
   const checkUser = await verifyUser(id, userId);
-  if (checkUser.message) return checkUser;
+  if (checkUser.error) return checkUser;
 
   const deletedPost = await BlogPost.destroy({
     where: { id },
