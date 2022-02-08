@@ -11,8 +11,9 @@ const createUser = async (userObj) => {
   const { displayName, email, password, image } = userObj;
   const userEmail = await getEmail(userObj.email);
   if (userEmail) {
-    return { code: 409, 
-      message: { message: 'User already registered' } };
+    return { error: {
+      code: 'conflict', message: 'User already registered',
+    } };
   }
   const user = await User.create({
     displayName,
@@ -30,8 +31,9 @@ const getAllUsers = async () => {
 const useById = async (id) => {
   const user = await User.findByPk(id);
   if (!user) {
-    return { code: 404, 
-      message: { message: 'User does not exist' } };
+    return { error: {
+      code: 'notFound', message: 'User does not exist',
+    } };
   }
   return user;
 };
