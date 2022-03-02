@@ -1,25 +1,38 @@
-require('dotenv').config();
+/* eslint-disable camelcase */
+require('dotenv/config');
+
+const { HOST, PASSWORD_POSTGRES, DATABASE, DB_USERNAME, DB_PORT, DATABASE_URL } = process.env;
 
 module.exports = {
   development: {
-    username: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: 'blogs_api',
-    host: process.env.HOSTNAME,
-    dialect: 'mysql',
+    username: DB_USERNAME,
+    password: PASSWORD_POSTGRES,
+    database: DATABASE,
+    host: HOST,
+    port: DB_PORT,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
   test: {
-    username: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: 'blogs_api',
-    host: process.env.HOSTNAME,
-    dialect: 'mysql',
+    username: DB_USERNAME,
+    password: PASSWORD_POSTGRES,
+    database: DATABASE,
+    host: HOST,
+    port: DB_PORT,
+    dialect: 'postgres',
   },
   production: {
-    username: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: 'blogs_api',
-    host: process.env.HOSTNAME,
-    dialect: 'mysql',
+    username: DB_USERNAME,
+    password: PASSWORD_POSTGRES,
+    database: DATABASE,
+    host: HOST,
+    port: DB_PORT,
+    use_env_variable: DATABASE_URL,
+    dialect: 'postgres',
   },
 };
